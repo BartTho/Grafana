@@ -108,3 +108,5 @@ Bekijk de voorbeeld configuratie bestanden in deze folder van github.
 - Grafana Alloy Configuration blocks : https://grafana.com/docs/alloy/latest/reference/config-blocks/ https://grafana.com/docs/alloy/latest/reference/config-blocks/
 - Grafana loki components: https://grafana.com/docs/alloy/latest/reference/components/loki/
 - Github: https://github.com/grafana/alloy-scenarios/
+- Prometheus: https://www.youtube.com/watch?v=pGSkPutCKtQ
+- Prometheus: https://www.youtube.com/watch?v=lW4aqrXXW30

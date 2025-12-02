@@ -64,6 +64,35 @@ sudo systemctl enable node_exporter.service
 Wanneer de service actief is kan je controleren of hij toegankelijk is door de url van de host te checken op, 
 in dit geval, poort 9100. http://[IP-DevOps-Server]:9100
 
+# Prometheus
+## Installetie
+### Downloaden en uitpakken
+
+Volg de volgende stappen om Node Exporter te installeren:
+- [ ] Haal de laatste versie op: https://prometheus.io/download/
+- [ ] Pak 'm uit.
+- [ ] Maak een nieuwe groep aan voor de aan te maken gebruiker;
+- [ ] Voeg een nieuwe gebruiker toe, ken deze toe aan de zojuist gemaakte groep. Het aanmaken van een userdirectory is niet nodig voor deze gebruiker;
+- [ ] Verplaats de gedownloade binary naar de juiste directory en geef het de juiste rechten
+https://github.com/prometheus/prometheus/releases/download/v3.5.0/prometheus-3.5.0.darwin-amd64.tar.gz
+
+wget [https://github.com/prometheus/prometheus/releases/download/v2.0.0/prometheus-2.0.0.linux-amd64.tar.gz](https://github.com/prometheus/prometheus/releases/download/v3.5.0/prometheus-3.5.0.linux-amd64.tar.gz)
+tar xvf prometheus-2.0.0.linux-amd64.tar.gz
+sudo cp prometheus-2.0.0.linux-amd64/prometheus /usr/local/bin/
+sudo cp prometheus-2.0.0.linux-amd64/promtool /usr/local/bin/
+sudo chown prome:prome /usr/local/bin/prometheus
+sudo chown prome:prome /usr/local/bin/promtool
+sudo chown prome:prome /var/lib/prometheus
+
+
+
+
+
+
+
+
+
+
 
 # Links
 https://www.thedutchlab.com/inzichten/grafana-alloy-quickstart

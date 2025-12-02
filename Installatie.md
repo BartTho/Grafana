@@ -47,7 +47,7 @@ Group=node_exporter
 Type=simple
 Restart=on-failure
 ExecStart=/usr/bin/node_exporter \
-  --web.listen-address=:9200
+  --web.listen-address=:9100
 
 [Install]
 WantedBy=multi-user.target
@@ -62,7 +62,7 @@ sudo systemctl status node_exporter
 sudo systemctl enable node_exporter.service
 ```
 Wanneer de service actief is kan je controleren of hij toegankelijk is door de url van de host te checken op, 
-in dit geval, poort 9200. http://[IP-DevOps-Server]:9200
+in dit geval, poort 9100. http://[IP-DevOps-Server]:9100
 
 
 # Links

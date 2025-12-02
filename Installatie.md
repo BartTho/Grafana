@@ -63,3 +63,11 @@ sudo systemctl enable node_exporter.service
 ```
 Wanneer de service actief is kan je controleren of hij toegankelijk is door de url van de host te checken op, 
 in dit geval, poort 9200. http://[IP-DevOps-Server]:9200
+
+
+# Links
+https://www.thedutchlab.com/inzichten/grafana-alloy-quickstart
+[https://www.thedutchlab.com/inzichten/grafana-alloy-quickstart](https://grafana.com/docs/grafana-cloud/send-data/metrics/metrics-prometheus/prometheus-config-examples/noagent_linuxnode/)
+https://www.thedutchlab.com/inzichten
+https://uptrace.dev/tools/prometheus-for-docker
+

@@ -1,17 +1,17 @@
-# Installatie
+# Inleiding
 We installeren 3 componenten
 - Grafana: voor visualisatie
 - Prometheus: Voor het verwerken van de verzamelde data
 - Node Exporter: voor het verzamelen van data
-# Node Exporter
+
+# Installatie Node Exporter
 
 Wanneer je net begint met Prometheus om je linux resources te monitoren is het goed om eerst de basics op te zetten. 
 De stappen hieronder helpen je om deze basics op te zetten. 
 Er wordt van een specifieke versie uitgegaan voor het gemak, maar je kan natuurlijk de laatst beschikbare 
 versie gebruiken om bij te blijven.
 
-## Installetie
-### Downloaden en uitpakken
+## Downloaden en uitpakken
 
 Volg de volgende stappen om Node Exporter te installeren:
 - [ ] Haal de laatste versie op;
@@ -29,7 +29,7 @@ cd node_exporter-1.9.1.linux-amd64/
 sudo mv node_exporter /usr/bin/
 sudo chown node_exporter:node_exporter /usr/bin/node_exporter
 ```
-### Service aanmaken en starten
+## Service aanmaken en starten
 
 - [ ] Maak vervolgens een nieuw bestand aan voor de service.
 - [ ] Geef het een inhoud
@@ -57,7 +57,7 @@ ExecStart=/usr/bin/node_exporter \
 [Install]
 WantedBy=multi-user.target
 ```
-
+## Node Exporter service activeren en starten 
 Geef het de juiste rechten en start vervolgens de service, check of hij werkt en zorg dat hij automatisch start bij een eventuele reboot.
 ```
 sudo chmod 664 /usr/lib/systemd/system/node_exporter.service
@@ -66,17 +66,15 @@ sudo systemctl start node_exporter
 sudo systemctl status node_exporter
 sudo systemctl enable node_exporter.service
 ```
+## Node Exporter controleren
 Wanneer de service actief is kan je controleren of hij toegankelijk is door de url van de host te checken op, 
 in dit geval, poort 9100. http://[IP-DevOps-Server]:9100
 
-
-# Prometheus
-## Installetie
+# Installatie Prometheus
 Zodra aan al deze vereisten is voldaan, is uw systeem klaar om Prometheus te installeren.
 Hieronder vindt u de procedure voor het downloaden en installeren van Prometheus.
-https://prometheus.io/download/
 
-### Gebruiker aanmaken en mappen aanmaken
+## Gebruiker aanmaken en mappen aanmaken
 - [ ] Voer het volgende in om Prometheus-gebruikersaccounts aan te maken die als servicegebruikersaccounts worden gebruikt voor beveiligings- en beheerdoeleinden. Deze accounts worden niet gebruikt om in te loggen op het systeem.
 - [ ] Prometheus-mappen aanmaken
 
@@ -86,7 +84,7 @@ sudo mkdir /etc/prometheus
 sudo mkdir /var/lib/prometheus
 ```    
 
-### Downloaden en uitpakken
+## Downloaden en uitpakken
 - [ ] Haal de laatste versie op: https://prometheus.io/download/
 - [ ] Pak 'm uit.
 - [ ] Maak een nieuwe groep aan voor de aan te maken gebruiker;
@@ -124,6 +122,8 @@ scrape_configs:
       - targets: ["localhost:9100"]
 ```
 Druk op Ctrl+o om op te slaan en op Ctrl+x om het bestand te sluiten.
+
+## Service aanmaken en starten
 - [ ] Nu gaan we een nieuw bestand voor de systemd-service aanmaken. Voer hiervoor de volgende opdracht in de terminal uit:
 ```
 sudo nano /etc/systemd/system/prometheus.service
@@ -147,6 +147,8 @@ ExecStart=/usr/local/bin/prometheus \
 WantedBy=multi-user.target
 ```
 Druk op Ctrl+o om het bestand op te slaan en op Ctrl+x om het bestand te sluiten.
+
+## Prometheuse service activeren en starten 
 - [ ] Herlaadt u systemd met de volgende opdracht:
 - [ ] Start de Prometheus-service
 - [ ] Schakel de Prometheus-service in bij het opstarten van het systeem
@@ -157,22 +159,24 @@ sudo systemctl start prometheus
 sudo systemctl enable prometheus
 sudo systemctl status prometheus
 ```
-De volgende schermafbeelding laat zien dat de Prometheus-service actief is.
+
+## Promotheus controleren
+
 Open de Prometheus-webinterface
 Probeer vervolgens de Prometheus-webinterface te openen. Open een webbrowser en ga naar het volgende adres:
 
 http://ip-address:9090
 
-# Grafana
-### Installatie Grafana
+# Installatie Grafana
+## Installeren via apt
 Volg de volgende stappen om Grafana te installeren vanuit de APT-repository:
-- [ ] Installeer de vereiste pakketten:
-- [ ] Importeer de GPG-sleutel:
-- [ ] Om een ​​repository voor stabiele releases toe te voegen, voert u de volgende opdracht uit:
-- [ ] Voer de volgende opdracht uit om de lijst met beschikbare pakketten bij te werken:
-- [ ] Installeert de nieuwste OSS-release:
+- [ ] Installeer de vereiste pakketten
+- [ ] Importeer de GPG-sleutel
+- [ ] Om een ​​repository voor stabiele releases toe te voegen, voert u de volgende opdracht uit
+- [ ] Voer de volgende opdracht uit om de lijst met beschikbare pakketten bij te werken
+- [ ] Installeert de nieuwste OSS-release
 ```
-sudo apt-get install -y apt-transport-https software-properties-common wget
+sudo apt install -y apt-transport-https software-properties-common wget
 
 sudo mkdir -p /etc/apt/keyrings/
 wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
@@ -181,7 +185,8 @@ echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stab
 sudo apt-get update
 sudo apt-get install grafana
 ```
-### Starten Grafana
+
+## Starten Grafana
 Dit onderwerp bevat instructies voor het starten van de Grafana-server. Voor bepaalde configuratiewijzigingen moet u de Grafana-server mogelijk opnieuw opstarten om ze van kracht te laten worden.
 De volgende instructies starten het grafana-serverproces als de grafana-gebruiker, die is aangemaakt tijdens de installatie van het pakket.
 We kunnen de server starten met systemctl.
@@ -193,21 +198,22 @@ sudo systemctl enable grafana-server.service
 sudo systemctl start grafana-server
 sudo systemctl status grafana-server
 ```
-### Configuratie Grafana
+## Configuratie Grafana
 We hebben Grafana geïnstalleerd met behulp van apt, dan is het configuratiebestand /etc/grafana/grafana.ini
 ```
 sudo nano /etc/grafana/grafana.ini
 ```
-### Eerste login Grafana
-- surf naar IP-Server:3000
+## Eerste login Grafana
+- surf naar http://IP-Server:3000
 - Gebruiker: admin
 - Paswoord: admin
 Wijzig het passwoord.
 
-
+## Import dashboard
+- Dashbord : 1860 - https://grafana.com/grafana/dashboards/1860-node-exporter-full
+  
 # Links
-https://www.thedutchlab.com/inzichten/grafana-alloy-quickstart
-[https://www.thedutchlab.com/inzichten/grafana-alloy-quickstart](https://grafana.com/docs/grafana-cloud/send-data/metrics/metrics-prometheus/prometheus-config-examples/noagent_linuxnode/)
+https://grafana.com/grafana/dashboards/1860-node-exporter-full/
 https://www.thedutchlab.com/inzichten
 https://uptrace.dev/tools/prometheus-for-docker
 

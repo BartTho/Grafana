@@ -1,3 +1,8 @@
+# Installatie
+We installeren 3 componenten
+- Grafana: voor visualisatie
+- Prometheus: Voor het verwerken van de verzamelde data
+- Node Exporter: voor het verzamelen van data
 # Node Exporter
 
 Wanneer je net begint met Prometheus om je linux resources te monitoren is het goed om eerst de basics op te zetten. 
@@ -98,15 +103,6 @@ sudo chown prome:prome /usr/local/bin/promtool
 sudo chown prome:prome /var/lib/prometheus
 ```
 
-- [ ] Nadat je de binaire bestanden hebt gekopieerd, kopieert je de vereiste bibliotheken naar de map /etc/prometheus.
-- [ ] Gebruik vervolgens de volgende opdrachten om het eigendom van de bestanden te wijzigen.
-
-```
-sudo cp -r prometheus-3.5.0.linux-amd64/consoles /etc/prometheus
-sudo cp -r prometheus-3.5.0.linux-amd64/console_libraries /etc/prometheus
-sudo chown -R prome:prome /etc/prometheus/consoles
-sudo chown -R prome:prome /etc/prometheus/console_libraries
-``` 
 ## Prometheus Configuration
 - [ ] In deze sectie maken we het configuratiebestand prometheus.yml aan in de map /etc/prometheus die we in de vorige stappen hebben aangemaakt. Voer de volgende opdracht uit in Terminal om het bestand prometheus.yml te bewerken:
 ``` 
@@ -125,7 +121,7 @@ scrape_configs:
 
   - job_name: "node-exporter"
     static_configs:
-      - targets: ["node-exporter:9100"]
+      - targets: ["localhost:9100"]
 ```
 Druk op Ctrl+o om op te slaan en op Ctrl+x om het bestand te sluiten.
 - [ ] Nu gaan we een nieuw bestand voor de systemd-service aanmaken. Voer hiervoor de volgende opdracht in de terminal uit:
@@ -146,8 +142,6 @@ Type=simple
 ExecStart=/usr/local/bin/prometheus \
     --config.file /etc/prometheus/prometheus.yml \
     --storage.tsdb.path /var/lib/prometheus/ \
-    --web.console.templates=/etc/prometheus/consoles \
-    --web.console.libraries=/etc/prometheus/console_libraries
 
 [Install]
 WantedBy=multi-user.target
@@ -168,6 +162,48 @@ Open de Prometheus-webinterface
 Probeer vervolgens de Prometheus-webinterface te openen. Open een webbrowser en ga naar het volgende adres:
 
 http://ip-address:9090
+
+# Grafana
+### Installatie Grafana
+Volg de volgende stappen om Grafana te installeren vanuit de APT-repository:
+- [ ] Installeer de vereiste pakketten:
+- [ ] Importeer de GPG-sleutel:
+- [ ] Om een ​​repository voor stabiele releases toe te voegen, voert u de volgende opdracht uit:
+- [ ] Voer de volgende opdracht uit om de lijst met beschikbare pakketten bij te werken:
+- [ ] Installeert de nieuwste OSS-release:
+```
+sudo apt-get install -y apt-transport-https software-properties-common wget
+
+sudo mkdir -p /etc/apt/keyrings/
+wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
+
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+sudo apt-get update
+sudo apt-get install grafana
+```
+### Starten Grafana
+Dit onderwerp bevat instructies voor het starten van de Grafana-server. Voor bepaalde configuratiewijzigingen moet u de Grafana-server mogelijk opnieuw opstarten om ze van kracht te laten worden.
+De volgende instructies starten het grafana-serverproces als de grafana-gebruiker, die is aangemaakt tijdens de installatie van het pakket.
+We kunnen de server starten met systemctl.
+- [ ] We configureren Grafana-server zo dat deze bij het opstarten wordt gestart
+- [ ] We starten de service
+- [ ] We controleren of de service actief is
+```
+sudo systemctl enable grafana-server.service
+sudo systemctl start grafana-server
+sudo systemctl status grafana-server
+```
+### Configuratie Grafana
+We hebben Grafana geïnstalleerd met behulp van apt, dan is het configuratiebestand /etc/grafana/grafana.ini
+```
+sudo nano /etc/grafana/grafana.ini
+```
+### Eerste login Grafana
+- surf naar IP-Server:3000
+- Gebruiker: admin
+- Paswoord: admin
+Wijzig het passwoord.
+
 
 # Links
 https://www.thedutchlab.com/inzichten/grafana-alloy-quickstart
